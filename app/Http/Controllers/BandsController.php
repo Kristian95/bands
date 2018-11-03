@@ -12,9 +12,19 @@ class BandsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bands = Band::paginate(5);
+        $bands = Band::select(['id', 'name', 'description', 'location', 'date']);
+
+        if ($date = $request->input('date')) {
+            $bands->where('date', $date);
+        }
+
+        if ($order = $request->input('nameOrder')) {
+            $bands->orderBy('name', $order);
+        }
+
+        $bands = $bands->paginate(5);
 
         return view('bands.index', compact('bands'));
     }

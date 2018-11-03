@@ -17,4 +17,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/bands', 'BandsController@index');
+Route::get('/bands', ['as' => 'bands', 'uses' => 'BandsController@index']);
